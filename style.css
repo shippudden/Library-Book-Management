@@ -155,3 +155,23 @@ li {
     }
 }
 
+@media (max-width: 992px) {
+    .container, .book-list-container {
+        width: 60%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container, .book-list-container {
+        width: 75%;
+    }
+}
+
+@media (max-width: 576px) {
+    .container, .book-list-container {
+        width: 80%;
+    }
+}
+
+
+
