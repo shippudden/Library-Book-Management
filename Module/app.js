@@ -92,24 +92,35 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', () 
 
 document.addEventListener("DOMContentLoaded", () => {
     const bookList = document.getElementById("bookList");
-    const addBookForm = document.getElementById("addBookForm");
+    const button = document.getElementById('btn')
     const bookTitleInput = document.getElementById("bookTitle");
+
+    button.addEventListener('click', (e) => {
+      e.preventDefault()
+      addBookAndUpdateList()
+    })
+
+    bookTitleInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { // Check if Enter key is pressed
+          e.preventDefault(); // Prevent form submission (optional, since the form already has a submit event)
+          addBookAndUpdateList();
+      }
+  });
+
+  // Function to add book and update list
+  function addBookAndUpdateList() {
+      const bookTitle = bookTitleInput.value.trim();
+      if (bookTitle) {
+          addBook(bookTitle);
+          saveBooksToLocalStorage();
+          bookTitleInput.value = ''; // Clear the input
+          displayBooks(); // Update book list
+      }
+  }
 
     // Display books from local storage to the browser(if any)
     loadBooksFromLocalStorage()
     displayBooks()
-
-    // Add book event
-    addBookForm.addEventListener("submit", (e) => {
-        e.preventDefault(); // Prevent page reload
-        const bookTitle = bookTitleInput.value.trim();
-        if (bookTitle) {
-            addBook(bookTitle);
-            saveBooksToLocalStorage()
-            bookTitleInput.value = ''; // Clear the input
-            displayBooks(); // Update book list
-        }
-    });
 
     // Remove book event (Event Delegation)
     bookList.addEventListener("click", (e) => {
